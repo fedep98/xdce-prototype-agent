@@ -124,7 +124,7 @@ Cloudflare Workers Free currently allows limited daily usage and has a short CPU
 3. Install the **Microsoft 365 Agents Toolkit** extension in VS Code.
 4. Open `apps/m365-agent` as the VS Code workspace folder.
 5. In Agents Toolkit, sign in to a Microsoft 365 tenant with custom app upload enabled and a Microsoft 365 Copilot license or metered access.
-6. Select **Lifecycle > Provision** and choose the `dev` environment. The workflow creates the app registration in the Developer Portal, builds and validates the package, updates it, and publishes the agent with personal scope.
+6. Select **Lifecycle > Provision** and choose the `dev` environment. The workflow creates the app registration in the Developer Portal, builds and validates the package, updates it, and publishes the agent with the Toolkit's default personal scope.
 7. Open [Microsoft 365 Copilot](https://m365.cloud.microsoft/chat), open the agents drawer and select **XDCE Prototype Agent Dev**.
 8. Test “Mostra i componenti” and “Crea una pagina di ricerca con input, pulsante e tabella”.
 
