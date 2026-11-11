@@ -5,6 +5,8 @@ dist/
 .env
 .env.*
 !.env.example
+!apps/m365-agent/env/
+!apps/m365-agent/env/.env.dev
 coverage/
 packages/xdce-catalog/catalog/raw/
 apps/m365-agent/appPackage/build/
