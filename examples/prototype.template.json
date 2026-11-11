@@ -1,11 +1,11 @@
 {
   "schemaVersion": "1.0.0",
   "metadata": {
-    "id": "replace-me",
-    "title": "Template di prototipo",
-    "description": "Template non legato a metadati XDCE inventati: sostituire componentId con un ID prodotto dall'ingestion.",
-    "createdAt": "2026-11-11T15:25:58.631Z",
-    "catalogVersion": "replace-with-generated-catalog-version"
+    "id": "customer-search",
+    "title": "Ricerca clienti",
+    "description": "Esempio basato sul catalogo XDCE verificato.",
+    "createdAt": "2026-11-11T16:45:59.134Z",
+    "catalogVersion": "xdce-widget-master-verified-2026-11-11"
   },
   "viewport": {
     "width": 1440,
@@ -15,7 +15,7 @@
   "root": {
     "id": "page-root",
     "type": "layout",
-    "name": "Pagina",
+    "name": "Ricerca clienti",
     "layout": {
       "direction": "vertical",
       "gap": 16,
@@ -25,10 +25,48 @@
     },
     "children": [
       {
-        "id": "replace-me-component",
+        "id": "customer-query",
         "type": "component",
-        "componentId": "replace-with-ingested-component-id",
-        "props": {}
+        "componentId": "input-text",
+        "props": {
+          "label": "Cliente",
+          "placeholder": "Inserisci nome o codice",
+          "isSearchBar": true
+        }
+      },
+      {
+        "id": "search-action",
+        "type": "component",
+        "componentId": "button",
+        "variant": "type-action",
+        "props": {
+          "nbpLabel": "Cerca",
+          "nbpType": "ACTION",
+          "nbpStyle": "PRIMARY"
+        },
+        "interactions": [
+          {
+            "trigger": "click",
+            "action": "set-state",
+            "target": "results",
+            "value": "loading"
+          }
+        ]
+      },
+      {
+        "id": "results",
+        "type": "component",
+        "componentId": "table",
+        "variant": "selection-single",
+        "props": {
+          "nbpSelectionType": "SINGLE",
+          "ariaLabel": "Risultati ricerca clienti",
+          "nbpOptions": {
+            "sortable": true,
+            "pageSize": 10,
+            "disablePagination": false
+          }
+        }
       }
     ]
   }

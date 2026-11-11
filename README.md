@@ -20,7 +20,7 @@ Start the local Navigator service, then run:
 npm run ingest:xdce
 ```
 
-The ingestion fails without overwriting the snapshot unless it verifies at least four components, including button and table. It records repository, path and branch provenance and never downloads proprietary assets.
+When a verified snapshot already exists, ingestion re-reads every provenance path, verifies selectors, extracted properties, complete enum options and outputs, then refreshes the verification timestamp. A bootstrap run discovers at least four components including button and table. It never downloads proprietary assets.
 
 Navigator calls used by ingestion:
 
@@ -42,7 +42,7 @@ Navigator calls used by ingestion:
   {"query":"nbp-button","project":"XDCE0","repo":"xdce-widget","ext":"ts","limit":100}
   ```
 
-- `POST /bitbucket/files`
+- `POST /bitbucket/files` when exposed by discovery (optional enrichment)
 
   ```json
   {"project":"XDCE0","repo":"xdce-widget","at":"master","path":"src/","limit":5000}
@@ -81,10 +81,24 @@ The generator returns either `{ "status": "generated", "prototype": ... }`, stru
 
 ### Configure Microsoft 365 Copilot
 
-Replace `REPLACE_WITH_DEPLOYED_HOST` in `apps/m365-agent/ai-plugin.json` and `openapi.yaml` with the secured API host, then package/deploy through the Microsoft 365 Agents Toolkit for the target tenant. Add platform authentication at deployment time; do not commit tenant IDs, client secrets or tokens.
+1. Deploy `apps/mcp-server` behind an HTTPS endpoint reachable from Microsoft 365. The local `127.0.0.1` endpoint cannot be called by Copilot.
+2. Replace `REPLACE_WITH_DEPLOYED_HOST` in `apps/m365-agent/ai-plugin.json` and `apps/m365-agent/openapi.yaml`.
+3. Before production, replace the development `auth: None` configuration with the tenant-approved authentication scheme and protect the API with authorization, rate limiting and audit logging.
+4. In Microsoft 365 Agents Toolkit, create or open a declarative-agent project and use the files in `apps/m365-agent` as the declarative agent, API plugin and OpenAPI definition.
+5. Run the Toolkit validation, provision/package the app, then sideload it to an allowed test tenant or submit it through the tenant app catalog.
+6. Open Microsoft 365 Copilot, select **XDCE Prototype Agent**, and start with “Mostra i componenti” or “Crea una pagina”. The agent will call the API and ask catalog-backed questions before returning canonical JSON.
 
-## Current XDCE detection status
+Do not commit tenant IDs, client secrets, tokens or Navigator credentials. Tenant provisioning is deliberately outside this repository.
 
-No XDCE component is claimed as detected in this commit. Navigator access from the implementation session was blocked by unavailable interactive execution approval, so `packages/xdce-catalog/catalog/xdce-widget.snapshot.json` is deliberately empty with `status: "blocked"`. Running `npm run ingest:xdce` locally is the required step that will populate verified button, table and at least two additional components.
+## Verified XDCE catalog
+
+The checked-in snapshot is `ready` and contains four components verified from `XDCE0/xdce-widget@master`:
+
+- `button` (`nbp-button`) with complete extracted `NbpButtonType` options.
+- `table` (`nbp-table`) with complete extracted `NbpTableSelectionType` options and documented table interfaces.
+- `input-text` (`nbp-input-text`) with verified visual inputs and outputs.
+- `modal` (`nbp-modal`) with verified IDS/XL/popup constraints.
+
+Every component includes source paths, branch, verification status/timestamp and evidence classification. Button style/size examples are explicitly marked as partial documentation hints because the imported `NbpStyle`/`NbpSize` enums were not part of the verified source set.
 
 See [architecture](docs/architecture.md), [threat boundaries](docs/security.md), and [limitations](docs/limitations.md).

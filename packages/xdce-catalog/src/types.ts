@@ -4,9 +4,13 @@ export interface CatalogProperty {
   name: string;
   type: CatalogPropertyType;
   required: boolean;
+  decisionRequired?: boolean;
+  technical?: boolean;
   description?: string;
   default?: unknown;
   options?: string[];
+  optionsCompleteness?: "complete" | "partial" | "unknown";
+  evidence: "extracted" | "documentation-hint";
 }
 
 export interface CatalogVariant {
@@ -20,6 +24,13 @@ export interface ComponentProvenance {
   repository: "xdce-widget";
   branch: "master";
   paths: string[];
+  status: "verified";
+  verifiedAt: string;
+  evidence: Array<{
+    path: string;
+    kind: "extracted" | "documentation-hint";
+    details?: string;
+  }>;
 }
 
 export interface CatalogComponent {
@@ -30,6 +41,7 @@ export interface CatalogComponent {
   category: string;
   properties: CatalogProperty[];
   variants: CatalogVariant[];
+  outputs: string[];
   constraints: string[];
   provenance: ComponentProvenance;
 }

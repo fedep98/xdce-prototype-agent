@@ -1,14 +1,307 @@
 {
   "schemaVersion": "1.0.0",
-  "catalogVersion": "blocked-unverified",
-  "generatedAt": "2026-11-11T15:25:58.631Z",
+  "catalogVersion": "xdce-widget-master-verified-2026-11-11",
+  "generatedAt": "2026-11-11T16:45:59.134Z",
   "source": {
     "navigatorUrl": "http://localhost:12345",
     "project": "XDCE0",
     "repository": "xdce-widget",
     "branch": "master"
   },
-  "status": "blocked",
-  "blockedReason": "Navigator could not be reached from the implementation session because local command and HTTP execution required unavailable interactive approval. Run npm run ingest:xdce locally; this snapshot intentionally contains no invented XDCE metadata.",
-  "components": []
+  "status": "ready",
+  "components": [
+    {
+      "id": "button",
+      "selector": "nbp-button",
+      "name": "Button",
+      "description": "XDCE button with verified type choices and source-backed inputs.",
+      "category": "base",
+      "properties": [
+        { "name": "disableMinWidth", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "multiLineEnabled", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "onDarkBackground", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "type", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "nbpLabel", "type": "string", "required": false, "decisionRequired": true, "evidence": "extracted" },
+        { "name": "nbpIcon", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "disabled", "type": "boolean", "required": false, "evidence": "extracted" },
+        {
+          "name": "nbpStyle",
+          "type": "enum",
+          "required": false,
+          "decisionRequired": true,
+          "default": "DEFAULT",
+          "options": ["DEFAULT", "PRIMARY"],
+          "optionsCompleteness": "partial",
+          "description": "NbpStyle is imported from @isp/xdce-widget-base. Values are documentation hints, not a complete extracted enum.",
+          "evidence": "documentation-hint"
+        },
+        {
+          "name": "nbpStyleType",
+          "type": "enum",
+          "required": false,
+          "default": "FILLED",
+          "options": ["FILLED", "OUTLINE"],
+          "optionsCompleteness": "partial",
+          "description": "Documentation hints only; NbpStyle is imported.",
+          "evidence": "documentation-hint"
+        },
+        {
+          "name": "nbpAlign",
+          "type": "enum",
+          "required": false,
+          "default": "CENTER",
+          "options": ["LEFT", "CENTER", "RIGHT"],
+          "optionsCompleteness": "partial",
+          "description": "Documentation hints only; NbpStyle is imported.",
+          "evidence": "documentation-hint"
+        },
+        {
+          "name": "nbpSize",
+          "type": "enum",
+          "required": false,
+          "default": "MD",
+          "options": ["MD", "LG"],
+          "optionsCompleteness": "partial",
+          "description": "NbpSize is imported from @isp/xdce-widget-base; known examples are not a complete extracted enum.",
+          "evidence": "documentation-hint"
+        },
+        {
+          "name": "nbpType",
+          "type": "enum",
+          "required": false,
+          "decisionRequired": true,
+          "default": "ACTION",
+          "options": ["ACTION", "SELECT", "GENERATIVE", "CHECK", "PROFILE", "CARD", "PROFILE_PG", "ROUNDED", "SEMI_ROUNDED"],
+          "optionsCompleteness": "complete",
+          "evidence": "extracted"
+        },
+        { "name": "ctaLinkMode", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "nbpChecked", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "firstFocus", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "focusOn", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "tabindex", "type": "number", "required": false, "default": 0, "evidence": "extracted" },
+        { "name": "nbpShadow", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "invertIconPosition", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "iconAriaLabel", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "alternativeAriaLabel", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "isSlim", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "idsMode", "type": "boolean", "required": false, "default": false, "evidence": "extracted" }
+      ],
+      "variants": [
+        { "id": "type-action", "label": "Type: ACTION", "props": { "nbpType": "ACTION" } },
+        { "id": "type-select", "label": "Type: SELECT", "props": { "nbpType": "SELECT" } },
+        { "id": "type-generative", "label": "Type: GENERATIVE", "props": { "nbpType": "GENERATIVE" } },
+        { "id": "type-check", "label": "Type: CHECK", "props": { "nbpType": "CHECK" } },
+        { "id": "type-profile", "label": "Type: PROFILE", "props": { "nbpType": "PROFILE" } },
+        { "id": "type-card", "label": "Type: CARD", "props": { "nbpType": "CARD" } },
+        { "id": "type-profile-pg", "label": "Type: PROFILE_PG", "props": { "nbpType": "PROFILE_PG" } },
+        { "id": "type-rounded", "label": "Type: ROUNDED", "props": { "nbpType": "ROUNDED" } },
+        { "id": "type-semi-rounded", "label": "Type: SEMI_ROUNDED", "props": { "nbpType": "SEMI_ROUNDED" } }
+      ],
+      "outputs": ["nbpClick", "onFocusOut", "onFocusIn"],
+      "constraints": [
+        "NbpButtonType options are complete and extracted from nbp-button.enums.ts.",
+        "NbpStyle and NbpSize options are partial documentation hints because their enums are imported from @isp/xdce-widget-base."
+      ],
+      "provenance": {
+        "project": "XDCE0",
+        "repository": "xdce-widget",
+        "branch": "master",
+        "paths": [
+          "src/base/nbp-button/nbp-button.component.ts",
+          "src/base/nbp-button/nbp-button.enums.ts"
+        ],
+        "status": "verified",
+        "verifiedAt": "2026-11-11T16:45:59.134Z",
+        "evidence": [
+          { "path": "src/base/nbp-button/nbp-button.component.ts", "kind": "extracted", "details": "Selector, inputs, defaults and outputs." },
+          { "path": "src/base/nbp-button/nbp-button.enums.ts", "kind": "extracted", "details": "Complete NbpButtonType values." },
+          { "path": "src/base/nbp-button/nbp-button.component.ts", "kind": "documentation-hint", "details": "Historical examples for style, style type, alignment and size; not complete imported enums." }
+        ]
+      }
+    },
+    {
+      "id": "table",
+      "selector": "nbp-table",
+      "name": "Table",
+      "description": "XDCE data table with verified selection modes and option interfaces.",
+      "category": "process-form",
+      "properties": [
+        { "name": "nbpStyle", "type": "object", "required": false, "description": "Imported NbpStyle; values were not available in the verified source set.", "evidence": "extracted" },
+        { "name": "nbpPaginationLabels", "type": "object", "required": false, "evidence": "extracted" },
+        { "name": "scrollBar", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "nbpId", "type": "string", "required": false, "evidence": "extracted" },
+        {
+          "name": "nbpOptions",
+          "type": "object",
+          "required": false,
+          "description": "INbpTableOptions: sortable:boolean; pageSize?:number; columns?:INbpTableColumn[]; disablePagination?:boolean; pageGapSize?:number.",
+          "evidence": "extracted"
+        },
+        { "name": "nbpDataSource", "type": "array", "required": false, "evidence": "extracted" },
+        { "name": "nbpAutoBind", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpLayoutAuto", "type": "boolean", "required": false, "evidence": "extracted" },
+        {
+          "name": "nbpSelectionType",
+          "type": "enum",
+          "required": false,
+          "decisionRequired": true,
+          "options": ["NONE", "SINGLE", "MULTI"],
+          "optionsCompleteness": "complete",
+          "evidence": "extracted"
+        },
+        { "name": "nbpSelectedRow", "type": "number", "required": false, "evidence": "extracted" },
+        { "name": "tableMinWidth", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "ariaLabel", "type": "string", "required": false, "evidence": "extracted" }
+      ],
+      "variants": [
+        { "id": "selection-none", "label": "Selection: NONE", "props": { "nbpSelectionType": "NONE" } },
+        { "id": "selection-single", "label": "Selection: SINGLE", "props": { "nbpSelectionType": "SINGLE" } },
+        { "id": "selection-multi", "label": "Selection: MULTI", "props": { "nbpSelectionType": "MULTI" } }
+      ],
+      "outputs": ["nbpOnClickRow", "nbpOnSelectRow", "nbpOnMultiSelectRow", "nbpChangePage", "nbpSortColumn"],
+      "constraints": [
+        "Technical callbacks are intentionally not proposed as visual controls.",
+        "INbpTableColumn requires id, title, field, sortable, visible and minWidth; filter, filterArg, customStyle, HTMLHeaderFormat and width are optional."
+      ],
+      "provenance": {
+        "project": "XDCE0",
+        "repository": "xdce-widget",
+        "branch": "master",
+        "paths": [
+          "src/process-form/nbp-table/nbp-table.component.ts",
+          "src/process-form/nbp-table/nbp-table.enums.ts",
+          "src/process-form/nbp-table/nbp-table.interfaces.ts"
+        ],
+        "status": "verified",
+        "verifiedAt": "2026-11-11T16:45:59.134Z",
+        "evidence": [
+          { "path": "src/process-form/nbp-table/nbp-table.component.ts", "kind": "extracted", "details": "Selector, visual inputs and outputs." },
+          { "path": "src/process-form/nbp-table/nbp-table.enums.ts", "kind": "extracted", "details": "Complete NbpTableSelectionType values." },
+          { "path": "src/process-form/nbp-table/nbp-table.interfaces.ts", "kind": "extracted", "details": "INbpTableOptions and INbpTableColumn fields." }
+        ]
+      }
+    },
+    {
+      "id": "input-text",
+      "selector": "nbp-input-text",
+      "name": "Input text",
+      "description": "XDCE text input with validation, formatting, search and accessibility inputs.",
+      "category": "user-input",
+      "properties": [
+        { "name": "nbpOutput", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "isSearchBar", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "fromSearchBar", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "name", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "id", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "currencyConfiguration", "type": "object", "required": false, "evidence": "extracted" },
+        { "name": "nbpShowValidation", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "pattern", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "disabled", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "required", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "placeholder", "type": "string", "required": false, "decisionRequired": true, "evidence": "extracted" },
+        { "name": "autocomplete", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "autocompleteFocusOut", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpFormat", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "nbpRoundBorder", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpHighlightedDefault", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpIcon", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "nbpIconPswShow", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpCursorPointer", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpErrorMessage", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "maxlength", "type": "number", "required": false, "evidence": "extracted" },
+        { "name": "label", "type": "string", "required": false, "decisionRequired": true, "evidence": "extracted" },
+        { "name": "nbpStyle", "type": "object", "required": false, "description": "Imported style type; verified values are unavailable.", "evidence": "extracted" },
+        { "name": "obfuscateForCobrowing", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpCustomIconColor", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "tabindex", "type": "number", "required": false, "evidence": "extracted" },
+        { "name": "firstFocus", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpInputType", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "nbpKeyboardType", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "openOnFocus", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "resetPadding", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "accessibleTextForIcon", "type": "string", "required": false, "evidence": "extracted" },
+        { "name": "idsMode", "type": "boolean", "required": false, "evidence": "extracted" }
+      ],
+      "variants": [],
+      "outputs": ["focus", "nbpValidation", "enterPressed", "iconPressed", "nbpHasText", "nbpHighlightedDefaultChange"],
+      "constraints": [
+        "Typeahead callbacks and template inputs are technical integration hooks and are not proposed as ordinary visual controls.",
+        "No enum option list is claimed where the verified source set did not include the imported type definition."
+      ],
+      "provenance": {
+        "project": "XDCE0",
+        "repository": "xdce-widget",
+        "branch": "master",
+        "paths": ["src/user-input/nbp-input-text/nbp-input-text.component.ts"],
+        "status": "verified",
+        "verifiedAt": "2026-11-11T16:45:59.134Z",
+        "evidence": [
+          { "path": "src/user-input/nbp-input-text/nbp-input-text.component.ts", "kind": "extracted", "details": "Selector, visual inputs and outputs; technical typeahead hooks excluded." }
+        ]
+      }
+    },
+    {
+      "id": "modal",
+      "selector": "nbp-modal",
+      "name": "Modal",
+      "description": "XDCE modal and IDS popup modes with verified constraints.",
+      "category": "user-feedback",
+      "properties": [
+        { "name": "nbpOpened", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "nbpTitle", "type": "string", "required": false, "decisionRequired": true, "evidence": "extracted" },
+        { "name": "nbpSubTitle", "type": "string", "required": false, "evidence": "extracted" },
+        {
+          "name": "nbpSize",
+          "type": "enum",
+          "required": false,
+          "decisionRequired": true,
+          "default": "MD",
+          "options": ["MD", "XL"],
+          "optionsCompleteness": "partial",
+          "description": "MD is the verified default and XL is declared by NbpSizeModalExt; imported NbpSize values are not fully available.",
+          "evidence": "extracted"
+        },
+        { "name": "nbpButtons", "type": "array", "required": false, "default": [], "evidence": "extracted" },
+        { "name": "nbpStyle", "type": "object", "required": false, "default": "DEFAULT", "description": "Imported NbpStyle; complete enum unavailable.", "evidence": "extracted" },
+        { "name": "nbpShowOverflow", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "closeOnFocusOut", "type": "boolean", "required": false, "default": true, "description": "Deprecated and ignored according to source comments.", "evidence": "extracted" },
+        { "name": "closeIcon", "type": "boolean", "required": false, "evidence": "extracted" },
+        { "name": "fromBottomMode", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "idsMode", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "popUp", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "popUpHorizontalButton", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "popUpIcon", "type": "string", "required": false, "default": null, "evidence": "extracted" },
+        { "name": "subtitleFocusable", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "contentWrapperFocusable", "type": "boolean", "required": false, "default": true, "evidence": "extracted" },
+        { "name": "includeSubtitleInAccessibleLabel", "type": "boolean", "required": false, "default": false, "evidence": "extracted" },
+        { "name": "includeSubtitleInAccessibleDescription", "type": "boolean", "required": false, "default": true, "evidence": "extracted" }
+      ],
+      "variants": [
+        { "id": "size-xl", "label": "Size: XL", "props": { "nbpSize": "XL", "idsMode": true } }
+      ],
+      "outputs": ["nbpOpenedChange", "nbpOnButtonClicked", "nbpOnClose", "nbpOnOpen"],
+      "constraints": [
+        "XL is supported only when idsMode is true.",
+        "popUp, popUpHorizontalButton and popUpIcon are IDS modes and require idsMode=true.",
+        "popUpIcon additionally requires popUp=true.",
+        "closeOnFocusOut is deprecated and ignored."
+      ],
+      "provenance": {
+        "project": "XDCE0",
+        "repository": "xdce-widget",
+        "branch": "master",
+        "paths": [
+          "src/user-feedback/nbp-modal/nbp-modal.component.ts",
+          "src/user-feedback/nbp-modal/nbp-modal.interfaces.ts"
+        ],
+        "status": "verified",
+        "verifiedAt": "2026-11-11T16:45:59.134Z",
+        "evidence": [
+          { "path": "src/user-feedback/nbp-modal/nbp-modal.component.ts", "kind": "extracted", "details": "Selector, inputs, defaults, outputs and IDS constraints." },
+          { "path": "src/user-feedback/nbp-modal/nbp-modal.interfaces.ts", "kind": "extracted", "details": "NbpSizeModalExt XL value." }
+        ]
+      }
+    }
+  ]
 }

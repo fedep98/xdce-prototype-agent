@@ -21,4 +21,4 @@ flowchart LR
 - `apps/figma-plugin`: JSON import UI, render-plan validation, Auto Layout renderer and explicit native/fallback distinction.
 - `apps/m365-agent`: declarative-agent instructions, API plugin and OpenAPI contract with deployment placeholders.
 
-The canonical boundary is `PrototypeDocument` version `1.0.0`. Catalog validation and schema validation are separate on purpose: schema validation proves document shape; generation proves component IDs and important options came from the loaded catalog.
+The canonical boundary is `PrototypeDocument` version `1.0.0`. Catalog validation and schema validation are separate on purpose: schema validation proves document shape; generation proves component IDs and important options came from the loaded catalog. Provenance also separates extracted evidence from non-exhaustive documentation hints.

@@ -31,6 +31,33 @@ function optionQuestion(
   return { field, prompt, options, required: true };
 }
 
+function addConstraintQuestions(
+  questions: RequirementQuestion[],
+  componentId: string,
+  props: Record<string, unknown>,
+  index: number
+): void {
+  if (componentId !== "modal") return;
+  const idsModeRequired = props.nbpSize === "XL" ||
+    props.popUp === true ||
+    props.popUpHorizontalButton === true ||
+    props.popUpIcon !== undefined && props.popUpIcon !== null;
+  if (idsModeRequired && props.idsMode !== true) {
+    questions.push(optionQuestion(
+      `components[${index}].props.idsMode`,
+      "La configurazione modal richiesta è disponibile solo in modalità IDS. Abilitare idsMode?",
+      [{ value: "true", label: "Sì, abilita IDS mode" }]
+    ));
+  }
+  if (props.popUpIcon !== undefined && props.popUpIcon !== null && props.popUp !== true) {
+    questions.push(optionQuestion(
+      `components[${index}].props.popUp`,
+      "popUpIcon richiede anche popUp=true. Abilitare la modalità popup?",
+      [{ value: "true", label: "Sì, abilita popup" }]
+    ));
+  }
+}
+
 export function generatePrototype(store: CatalogStore, request: PrototypeRequest): GenerateResult {
   if (store.catalog.status !== "ready") {
     return {
@@ -85,7 +112,10 @@ export function generatePrototype(store: CatalogStore, request: PrototypeRequest
       })));
       for (const property of component.properties) {
         const supplied = requested.props?.[property.name];
-        if (supplied !== undefined && property.options && !property.options.includes(String(supplied))) {
+        if (supplied !== undefined &&
+            property.optionsCompleteness === "complete" &&
+            property.options &&
+            !property.options.includes(String(supplied))) {
           questions.push(optionQuestion(
             `components[${index}].props.${property.name}`,
             `Il valore '${String(supplied)}' non è disponibile per ${property.name}.`,
@@ -93,6 +123,7 @@ export function generatePrototype(store: CatalogStore, request: PrototypeRequest
           ));
         }
       }
+      addConstraintQuestions(questions, component.id, requested.props ?? {}, index);
     });
   }
 

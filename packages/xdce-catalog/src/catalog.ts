@@ -31,11 +31,23 @@ export class CatalogStore {
       }];
     }
     return component.properties
-      .filter((property) => property.required && props[property.name] === undefined)
+      .filter((property) =>
+        !property.technical &&
+        (property.required || property.decisionRequired) &&
+        props[property.name] === undefined
+      )
       .map((property) => ({
         field: property.name,
-        prompt: `Scegli ${property.name} per ${component.name}.`,
-        options: property.options?.map((option) => ({ value: option, label: option })) ?? [],
+        prompt: property.optionsCompleteness === "partial"
+          ? `Scegli ${property.name} per ${component.name}. Le opzioni mostrate sono hint documentali non esaustivi.`
+          : `Scegli ${property.name} per ${component.name}.`,
+        options: property.options?.map((option) => ({
+          value: option,
+          label: option,
+          ...(property.evidence === "documentation-hint"
+            ? { description: "Hint documentale; elenco non verificato come completo." }
+            : {})
+        })) ?? [],
         required: true
       }));
   }
