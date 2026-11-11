@@ -10,14 +10,17 @@
   "scripts": {
     "build": "tsc -b",
     "typecheck": "tsc -b --pretty false",
-    "test": "npm run build && node --test packages/prototype-schema/dist/validate.test.js packages/xdce-catalog/dist/catalog.test.js apps/mcp-server/dist/generator.test.js apps/figma-plugin/dist/render-plan.test.js",
+    "test": "npm run build && node --test packages/prototype-schema/dist/validate.test.js packages/xdce-catalog/dist/catalog.test.js apps/mcp-server/dist/generator.test.js apps/mcp-server/dist/handler.test.js apps/figma-plugin/dist/render-plan.test.js",
     "clean": "tsc -b --clean",
     "ingest:xdce": "npm run build && node packages/xdce-catalog/dist/cli.js",
-    "start:mcp": "npm run build && node apps/mcp-server/dist/server.js"
+    "start:mcp": "npm run build && node apps/mcp-server/dist/server.js",
+    "worker:dev": "wrangler dev",
+    "worker:deploy": "wrangler deploy"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "wrangler": "^4.45.0"
   },
   "engines": {
     "node": ">=20",

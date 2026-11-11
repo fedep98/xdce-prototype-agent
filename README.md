@@ -72,6 +72,42 @@ Default endpoint: `http://127.0.0.1:3000`.
 
 The generator returns either `{ "status": "generated", "prototype": ... }`, structured catalog-backed questions with `status: "needs-input"`, or an explicit error. It never silently chooses required catalog options.
 
+### Deploy free on Cloudflare Workers
+
+The same API is available through a Worker-compatible `fetch()` handler. The verified catalog is bundled at deploy time, so no database or persistent filesystem is required.
+
+```powershell
+npm install
+npm test
+npx wrangler login
+npm run worker:deploy
+```
+
+Cloudflare returns an HTTPS URL similar to:
+
+```text
+https://xdce-prototype-api.<account-subdomain>.workers.dev
+```
+
+Verify the deployment:
+
+```powershell
+$apiHost = 'https://xdce-prototype-api.<account-subdomain>.workers.dev'
+Invoke-RestMethod "$apiHost/health"
+Invoke-RestMethod "$apiHost/api/components"
+Invoke-WebRequest "$apiHost/openapi.yaml"
+```
+
+The Worker serves a deployment-specific OpenAPI document at `/openapi.yaml`, so the Microsoft 365 API plugin can use:
+
+```json
+"spec": {
+  "url": "https://xdce-prototype-api.<account-subdomain>.workers.dev/openapi.yaml"
+}
+```
+
+Cloudflare Workers Free currently allows limited daily usage and has a short CPU-time allowance per invocation. This stateless MVP stays within that model for ordinary catalog and prototype requests. Review the current Cloudflare limits before production use.
+
 ### Load the Figma plugin
 
 1. Build the monorepo.
