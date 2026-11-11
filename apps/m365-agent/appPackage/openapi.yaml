@@ -1,101 +1,76 @@
 openapi: 3.0.3
 info:
   title: XDCE Prototype API
-  description: Verified XDCE component catalog and canonical prototype generation API.
-  version: 0.1.0
+  description: Copilot-safe adapter for the verified XDCE catalog and prototype generator.
+  version: 0.2.0
 servers:
   - url: ${{API_BASE_URL}}
 paths:
-  /api/components:
+  /api/copilot/components:
     get:
       operationId: listComponents
       summary: List verified XDCE components
+      description: Returns a result field containing JSON text with verified components, options, constraints and provenance.
+      x-openai-isConsequential: false
       responses:
         "200":
-          description: Verified catalog response
+          description: Catalog serialized in the result string
           content:
             application/json:
               schema:
-                type: object
-                required: [status, catalogVersion, components]
-                properties:
-                  status:
-                    type: string
-                  catalogVersion:
-                    type: string
-                  components:
-                    type: array
-                    items:
-                      type: object
-  /api/prototypes/generate:
+                $ref: "#/components/schemas/StringResult"
+  /api/copilot/generate:
     post:
       operationId: generatePrototype
       summary: Generate a prototype or structured requirement questions
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/PrototypeRequest"
-      responses:
-        "200":
-          description: Generated prototype, structured questions, or explicit error
-          content:
-            application/json:
-              schema:
-                type: object
-  /api/prototypes/validate:
-    post:
-      operationId: validatePrototype
-      summary: Validate a canonical prototype document
+      description: Pass the complete prototype request as JSON text in requestJson. Parse the JSON text returned in result.
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              required: [requestJson]
+              properties:
+                requestJson:
+                  type: string
+                  description: JSON object text containing title, description, viewport, layout and components.
       responses:
         "200":
-          description: Validation result
+          description: Generation result serialized in the result string
           content:
             application/json:
               schema:
-                type: object
-                required: [valid, issues]
-                properties:
-                  valid:
-                    type: boolean
-                  issues:
-                    type: array
-                    items:
-                      type: object
+                $ref: "#/components/schemas/StringResult"
+  /api/copilot/validate:
+    post:
+      operationId: validatePrototype
+      summary: Validate a canonical prototype document
+      description: Pass the complete prototype document as JSON text in prototypeJson. Parse the JSON text returned in result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [prototypeJson]
+              properties:
+                prototypeJson:
+                  type: string
+                  description: Canonical prototype document encoded as JSON text.
+      responses:
+        "200":
+          description: Validation result serialized in the result string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StringResult"
 components:
   schemas:
-    PrototypeRequest:
+    StringResult:
       type: object
+      required: [result]
       properties:
-        title:
+        result:
           type: string
-        description:
-          type: string
-        layout:
-          type: string
-          enum: [horizontal, vertical]
-        viewport:
-          type: object
-          properties:
-            width:
-              type: number
-            height:
-              type: number
-        components:
-          type: array
-          items:
-            type: object
-            properties:
-              componentId:
-                type: string
-              variant:
-                type: string
-              props:
-                type: object
+          description: JSON text. Parse this string before interpreting the operation result.

@@ -24,3 +24,40 @@ test("serves the verified catalog through the Worker-compatible handler", async 
     "modal"
   ]);
 });
+
+test("serves Copilot plugin responses through a simple string contract", async () => {
+  const componentsResponse = await handleRequest(new Request("https://worker.example/api/copilot/components"));
+  const componentsPayload = await componentsResponse.json() as { result: string };
+  const components = JSON.parse(componentsPayload.result) as {
+    components: Array<{ id: string }>;
+  };
+  assert.deepEqual(components.components.map((component) => component.id), [
+    "button",
+    "table",
+    "input-text",
+    "modal"
+  ]);
+
+  const generateResponse = await handleRequest(new Request("https://worker.example/api/copilot/generate", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      requestJson: JSON.stringify({
+        title: "Customers",
+        layout: "vertical",
+        components: [{ componentId: "table", props: {} }]
+      })
+    })
+  }));
+  const generatePayload = await generateResponse.json() as { result: string };
+  const generation = JSON.parse(generatePayload.result) as {
+    status: string;
+    questions: Array<{ field: string; options: Array<{ value: string }> }>;
+  };
+  assert.equal(generation.status, "needs-input");
+  assert.deepEqual(generation.questions[0]?.options.map((option) => option.value), [
+    "NONE",
+    "SINGLE",
+    "MULTI"
+  ]);
+});

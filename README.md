@@ -95,16 +95,11 @@ Verify the deployment:
 $apiHost = 'https://xdce-prototype-api.<account-subdomain>.workers.dev'
 Invoke-RestMethod "$apiHost/health"
 Invoke-RestMethod "$apiHost/api/components"
+Invoke-RestMethod "$apiHost/api/copilot/components"
 Invoke-WebRequest "$apiHost/openapi.yaml"
 ```
 
-The Worker serves a deployment-specific OpenAPI document at `/openapi.yaml`, so the Microsoft 365 API plugin can use:
-
-```json
-"spec": {
-  "url": "https://xdce-prototype-api.<account-subdomain>.workers.dev/openapi.yaml"
-}
-```
+The Worker serves a deployment-specific OpenAPI document at `/openapi.yaml`. The packaged Microsoft 365 plugin uses the equivalent `appPackage/openapi.yaml` contract and the dedicated `/api/copilot/*` adapter endpoints. These endpoints wrap complex operation results in a JSON string so the Copilot API Plugin runtime receives only supported primitive function parameters and return values.
 
 Cloudflare Workers Free currently allows limited daily usage and has a short CPU-time allowance per invocation. This stateless MVP stays within that model for ordinary catalog and prototype requests. Review the current Cloudflare limits before production use.
 

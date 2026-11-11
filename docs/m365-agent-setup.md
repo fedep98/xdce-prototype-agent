@@ -35,6 +35,7 @@ Verify:
 $apiHost = 'https://xdce-prototype-api.<account-subdomain>.workers.dev'
 Invoke-RestMethod "$apiHost/health"
 Invoke-RestMethod "$apiHost/api/components"
+Invoke-RestMethod "$apiHost/api/copilot/components"
 Invoke-WebRequest "$apiHost/openapi.yaml"
 ```
 
@@ -82,6 +83,40 @@ Crea una pagina di ricerca clienti con input, pulsante e tabella.
 ```
 
 The agent must ask catalog-backed questions such as button type and table selection type before returning validated canonical JSON.
+
+### If an action reports a generic service error
+
+The Microsoft 365 plugin uses the `/api/copilot/*` adapter endpoints. Verify the deployed version directly:
+
+```powershell
+$apiHost = 'https://xdce-prototype-api.<account-subdomain>.workers.dev'
+
+$components = Invoke-RestMethod "$apiHost/api/copilot/components"
+$components.result | ConvertFrom-Json
+
+$request = @{
+  requestJson = (@{
+    title = 'Customer search'
+    layout = 'vertical'
+    components = @(
+      @{ componentId = 'input-text'; props = @{} }
+      @{ componentId = 'button'; props = @{} }
+      @{ componentId = 'table'; props = @{} }
+    )
+  } | ConvertTo-Json -Depth 10 -Compress)
+} | ConvertTo-Json -Compress
+
+$generated = Invoke-RestMethod `
+  -Uri "$apiHost/api/copilot/generate" `
+  -Method Post `
+  -ContentType 'application/json' `
+  -Body $request
+$generated.result | ConvertFrom-Json
+```
+
+If either path returns `404`, redeploy the Worker with `npm run worker:deploy`. After any API or app-package change, rerun **Lifecycle > Provision** so Agents Toolkit rebuilds and updates `appPackage.dev.zip`.
+
+To confirm requests from Microsoft reach Cloudflare, run `npx wrangler tail xdce-prototype-api` in a second terminal while invoking the agent. Do not copy authorization headers or tenant/user data into issue reports.
 
 ## 5. Publish to the tenant
 

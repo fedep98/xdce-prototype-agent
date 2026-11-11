@@ -8,15 +8,30 @@
   "functions": [
     {
       "name": "listComponents",
-      "description": "List verified XDCE components, properties, variants, constraints and provenance."
+      "description": "List verified XDCE components, properties, variants, constraints and provenance. Parse the JSON text in the result field.",
+      "capabilities": {
+        "security_info": {
+          "data_handling": ["GetPublicData"]
+        }
+      }
     },
     {
       "name": "generatePrototype",
-      "description": "Generate canonical prototype JSON or return structured questions for missing requirements. Present those questions to the user before calling the function again."
+      "description": "Serialize the complete request object as JSON text in requestJson. Parse the JSON text in result. If its status is needs-input, present its questions before calling again.",
+      "capabilities": {
+        "security_info": {
+          "data_handling": ["DataTransform"]
+        }
+      }
     },
     {
       "name": "validatePrototype",
-      "description": "Validate canonical prototype JSON and return explicit schema issues."
+      "description": "Serialize the complete prototype as JSON text in prototypeJson and parse the JSON text returned in result.",
+      "capabilities": {
+        "security_info": {
+          "data_handling": ["DataTransform"]
+        }
+      }
     }
   ],
   "runtimes": [
