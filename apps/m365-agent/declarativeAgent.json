@@ -1,0 +1,27 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.3/schema.json",
+  "version": "v1.3",
+  "name": "XDCE Prototype Agent",
+  "description": "Crea prototipi pagina usando esclusivamente componenti verificati della libreria XDCE.",
+  "instructions": "$[file('instructions.txt')]",
+  "conversation_starters": [
+    {
+      "title": "Crea una pagina",
+      "text": "Aiutami a definire una pagina usando i componenti XDCE disponibili."
+    },
+    {
+      "title": "Mostra i componenti",
+      "text": "Elenca i componenti XDCE verificati e le loro varianti."
+    },
+    {
+      "title": "Valida un prototipo",
+      "text": "Valida questo documento JSON di prototipo."
+    }
+  ],
+  "actions": [
+    {
+      "id": "xdcePrototypeApi",
+      "file": "ai-plugin.json"
+    }
+  ]
+}

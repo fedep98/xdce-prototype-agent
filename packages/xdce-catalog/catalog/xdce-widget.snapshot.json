@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "catalogVersion": "blocked-unverified",
+  "generatedAt": "2026-11-11T15:25:58.631Z",
+  "source": {
+    "navigatorUrl": "http://localhost:12345",
+    "project": "XDCE0",
+    "repository": "xdce-widget",
+    "branch": "master"
+  },
+  "status": "blocked",
+  "blockedReason": "Navigator could not be reached from the implementation session because local command and HTTP execution required unavailable interactive approval. Run npm run ingest:xdce locally; this snapshot intentionally contains no invented XDCE metadata.",
+  "components": []
+}

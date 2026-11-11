@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XDCE Prototype Importer</title>
+  <style>
+    body { font: 12px Inter, sans-serif; margin: 16px; color: #1f2328; }
+    textarea { box-sizing: border-box; width: 100%; min-height: 220px; margin: 6px 0 12px; font: 11px monospace; }
+    button { background: #0969da; border: 0; border-radius: 6px; color: white; padding: 8px 14px; cursor: pointer; }
+    #status { white-space: pre-wrap; margin-top: 12px; }
+    .error { color: #cf222e; }
+    .warning { color: #9a6700; }
+  </style>
+</head>
+<body>
+  <h2>XDCE Prototype Importer</h2>
+  <label for="prototype">Documento JSON canonico</label>
+  <textarea id="prototype" placeholder='{"schemaVersion":"1.0.0", ...}'></textarea>
+  <label for="mapping">Mapping opzionale componentId → Figma component key</label>
+  <textarea id="mapping" style="min-height:90px">{}</textarea>
+  <input id="file" type="file" accept="application/json">
+  <button id="import">Valida e importa</button>
+  <div id="status" role="status"></div>
+  <script>
+    const prototypeInput = document.getElementById("prototype");
+    const mappingInput = document.getElementById("mapping");
+    const status = document.getElementById("status");
+    document.getElementById("file").addEventListener("change", async (event) => {
+      const file = event.target.files[0];
+      if (file) prototypeInput.value = await file.text();
+    });
+    document.getElementById("import").addEventListener("click", () => {
+      try {
+        status.className = "";
+        status.textContent = "Importazione in corso…";
+        parent.postMessage({ pluginMessage: {
+          type: "import",
+          prototype: JSON.parse(prototypeInput.value),
+          mapping: JSON.parse(mappingInput.value || "{}")
+        } }, "*");
+      } catch (error) {
+        status.className = "error";
+        status.textContent = `JSON non valido: ${error.message}`;
+      }
+    });
+    onmessage = (event) => {
+      const message = event.data.pluginMessage;
+      if (message.type === "error") {
+        status.className = "error";
+        status.textContent = message.message;
+      } else {
+        status.className = message.warnings.length ? "warning" : "";
+        status.textContent = message.warnings.length
+          ? `Importato con avvisi:\n${message.warnings.join("\n")}`
+          : "Importazione completata.";
+      }
+    };
+  </script>
+</body>
+</html>

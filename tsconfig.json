@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/prototype-schema" },
+    { "path": "packages/xdce-catalog" },
+    { "path": "apps/mcp-server" },
+    { "path": "apps/figma-plugin" }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0.0",
+  "metadata": {
+    "id": "replace-me",
+    "title": "Template di prototipo",
+    "description": "Template non legato a metadati XDCE inventati: sostituire componentId con un ID prodotto dall'ingestion.",
+    "createdAt": "2026-11-11T15:25:58.631Z",
+    "catalogVersion": "replace-with-generated-catalog-version"
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "background": "#ffffff"
+  },
+  "root": {
+    "id": "page-root",
+    "type": "layout",
+    "name": "Pagina",
+    "layout": {
+      "direction": "vertical",
+      "gap": 16,
+      "padding": 24,
+      "width": "fill",
+      "height": "hug"
+    },
+    "children": [
+      {
+        "id": "replace-me-component",
+        "type": "component",
+        "componentId": "replace-with-ingested-component-id",
+        "props": {}
+      }
+    ]
+  }
+}

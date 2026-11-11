@@ -1,0 +1,11 @@
+{
+  "name": "@xdce/mcp-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/server.js",
+  "dependencies": {
+    "@xdce/catalog": "0.1.0",
+    "@xdce/prototype-schema": "0.1.0"
+  }
+}

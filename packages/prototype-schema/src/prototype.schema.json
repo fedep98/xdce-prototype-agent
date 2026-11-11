@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/xdce/prototype/1.0.0",
+  "title": "XDCE Prototype Document",
+  "type": "object",
+  "required": ["schemaVersion", "metadata", "viewport", "root"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "metadata": {
+      "type": "object",
+      "required": ["id", "title", "createdAt", "catalogVersion"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "catalogVersion": { "type": "string", "minLength": 1 }
+      }
+    },
+    "viewport": {
+      "type": "object",
+      "required": ["width", "height"],
+      "additionalProperties": false,
+      "properties": {
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "height": { "type": "number", "exclusiveMinimum": 0 },
+        "background": { "type": "string" }
+      }
+    },
+    "root": { "$ref": "#/$defs/node" }
+  },
+  "$defs": {
+    "style": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "background": { "type": "string" },
+        "color": { "type": "string" },
+        "borderColor": { "type": "string" },
+        "borderWidth": { "type": "number", "minimum": 0 },
+        "borderRadius": { "type": "number", "minimum": 0 },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "node": {
+      "oneOf": [
+        { "$ref": "#/$defs/layoutNode" },
+        { "$ref": "#/$defs/componentNode" },
+        { "$ref": "#/$defs/textNode" }
+      ]
+    },
+    "layoutNode": {
+      "type": "object",
+      "required": ["id", "type", "layout", "children"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "const": "layout" },
+        "name": { "type": "string" },
+        "layout": {
+          "type": "object",
+          "required": ["direction", "gap", "padding"],
+          "properties": {
+            "direction": { "enum": ["horizontal", "vertical"] },
+            "gap": { "type": "number", "minimum": 0 },
+            "padding": {
+              "oneOf": [
+                { "type": "number", "minimum": 0 },
+                {
+                  "type": "array",
+                  "prefixItems": [
+                    { "type": "number", "minimum": 0 },
+                    { "type": "number", "minimum": 0 },
+                    { "type": "number", "minimum": 0 },
+                    { "type": "number", "minimum": 0 }
+                  ],
+                  "items": false
+                }
+              ]
+            },
+            "align": { "enum": ["start", "center", "end", "stretch", "space-between"] },
+            "width": { "oneOf": [{ "type": "number" }, { "enum": ["fill", "hug"] }] },
+            "height": { "oneOf": [{ "type": "number" }, { "enum": ["fill", "hug"] }] }
+          }
+        },
+        "style": { "$ref": "#/$defs/style" },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/node" } }
+      }
+    },
+    "componentNode": {
+      "type": "object",
+      "required": ["id", "type", "componentId", "props"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "const": "component" },
+        "componentId": { "type": "string", "minLength": 1 },
+        "variant": { "type": "string" },
+        "props": { "type": "object" },
+        "style": { "$ref": "#/$defs/style" },
+        "children": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+        "interactions": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "textNode": {
+      "type": "object",
+      "required": ["id", "type", "text"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "type": { "const": "text" },
+        "text": { "type": "string" },
+        "style": { "$ref": "#/$defs/style" }
+      }
+    }
+  }
+}
