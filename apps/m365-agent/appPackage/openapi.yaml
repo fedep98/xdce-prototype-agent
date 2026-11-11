@@ -1,0 +1,101 @@
+openapi: 3.0.3
+info:
+  title: XDCE Prototype API
+  description: Verified XDCE component catalog and canonical prototype generation API.
+  version: 0.1.0
+servers:
+  - url: ${{API_BASE_URL}}
+paths:
+  /api/components:
+    get:
+      operationId: listComponents
+      summary: List verified XDCE components
+      responses:
+        "200":
+          description: Verified catalog response
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, catalogVersion, components]
+                properties:
+                  status:
+                    type: string
+                  catalogVersion:
+                    type: string
+                  components:
+                    type: array
+                    items:
+                      type: object
+  /api/prototypes/generate:
+    post:
+      operationId: generatePrototype
+      summary: Generate a prototype or structured requirement questions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PrototypeRequest"
+      responses:
+        "200":
+          description: Generated prototype, structured questions, or explicit error
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/prototypes/validate:
+    post:
+      operationId: validatePrototype
+      summary: Validate a canonical prototype document
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [valid, issues]
+                properties:
+                  valid:
+                    type: boolean
+                  issues:
+                    type: array
+                    items:
+                      type: object
+components:
+  schemas:
+    PrototypeRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        layout:
+          type: string
+          enum: [horizontal, vertical]
+        viewport:
+          type: object
+          properties:
+            width:
+              type: number
+            height:
+              type: number
+        components:
+          type: array
+          items:
+            type: object
+            properties:
+              componentId:
+                type: string
+              variant:
+                type: string
+              props:
+                type: object

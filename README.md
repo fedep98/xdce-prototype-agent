@@ -117,14 +117,26 @@ Cloudflare Workers Free currently allows limited daily usage and has a short CPU
 
 ### Configure Microsoft 365 Copilot
 
-1. Deploy `apps/mcp-server` behind an HTTPS endpoint reachable from Microsoft 365. The local `127.0.0.1` endpoint cannot be called by Copilot.
-2. Replace `REPLACE_WITH_DEPLOYED_HOST` in `apps/m365-agent/ai-plugin.json` and `apps/m365-agent/openapi.yaml`.
-3. Before production, replace the development `auth: None` configuration with the tenant-approved authentication scheme and protect the API with authorization, rate limiting and audit logging.
-4. In Microsoft 365 Agents Toolkit, create or open a declarative-agent project and use the files in `apps/m365-agent` as the declarative agent, API plugin and OpenAPI definition.
-5. Run the Toolkit validation, provision/package the app, then sideload it to an allowed test tenant or submit it through the tenant app catalog.
-6. Open Microsoft 365 Copilot, select **XDCE Prototype Agent**, and start with “Mostra i componenti” or “Crea una pagina”. The agent will call the API and ask catalog-backed questions before returning canonical JSON.
+`apps/m365-agent` is a complete Microsoft 365 Agents Toolkit project using the current Microsoft schemas: app manifest 1.30, declarative agent 1.9 and plugin 2.4.
 
-Do not commit tenant IDs, client secrets, tokens or Navigator credentials. Tenant provisioning is deliberately outside this repository.
+1. Deploy the Cloudflare Worker and copy its `https://...workers.dev` URL.
+2. Set `API_BASE_URL` in `apps/m365-agent/env/.env.dev` to that URL. Do not add a trailing slash.
+3. Install the **Microsoft 365 Agents Toolkit** extension in VS Code.
+4. Open `apps/m365-agent` as the VS Code workspace folder.
+5. In Agents Toolkit, sign in to a Microsoft 365 tenant with custom app upload enabled and a Microsoft 365 Copilot license or metered access.
+6. Select **Lifecycle > Provision** and choose the `dev` environment. The workflow creates the app registration in the Developer Portal, builds and validates the package, updates it, and publishes the agent with user scope.
+7. Open [Microsoft 365 Copilot](https://m365.cloud.microsoft/chat), open the agents drawer and select **XDCE Prototype Agent Dev**.
+8. Test “Mostra i componenti” and “Crea una pagina di ricerca con input, pulsante e tabella”.
+
+The generated development package is written to:
+
+```text
+apps/m365-agent/appPackage/build/appPackage.dev.zip
+```
+
+For tenant-wide publication, run **Lifecycle > Publish** after validation and administrator approval. The publish workflow uses tenant scope.
+
+The API plugin currently uses `auth: None` for an MVP. Before production, add tenant-approved authentication and protect the API with authorization, rate limiting and audit logging. Never commit tenant IDs, client secrets, Cloudflare tokens or Navigator credentials.
 
 ## Verified XDCE catalog
 
@@ -137,4 +149,4 @@ The checked-in snapshot is `ready` and contains four components verified from `X
 
 Every component includes source paths, branch, verification status/timestamp and evidence classification. Button style/size examples are explicitly marked as partial documentation hints because the imported `NbpStyle`/`NbpSize` enums were not part of the verified source set.
 
-See [architecture](docs/architecture.md), [threat boundaries](docs/security.md), and [limitations](docs/limitations.md).
+See [architecture](docs/architecture.md), [Microsoft 365 agent setup](docs/m365-agent-setup.md), [threat boundaries](docs/security.md), and [limitations](docs/limitations.md).

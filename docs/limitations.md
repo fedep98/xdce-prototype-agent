@@ -5,5 +5,5 @@
 - `NbpStyle` and `NbpSize` are imported by the verified components. Where local comments exposed example values, the catalog labels them as partial documentation hints rather than complete enums.
 - The API does not include production identity, tenant registration, persistence or model orchestration.
 - The Figma renderer supports layout, text, mapped native instances and labelled visual fallbacks. It does not yet map every XDCE property to Figma variant properties.
-- Microsoft 365 files contain placeholder deployment URLs and no tenant/client credentials.
+- The Microsoft 365 package is complete and schema-valid, but `env/.env.dev` must be set to the deployed Worker URL before provisioning. Tenant/client credentials are intentionally not committed.
 - Schema validation is implemented without a third-party JSON Schema engine to keep the runtime minimal. `prototype.schema.json` remains the portable canonical contract.

@@ -7,3 +7,5 @@ dist/
 !.env.example
 coverage/
 packages/xdce-catalog/catalog/raw/
+apps/m365-agent/appPackage/build/
+apps/m365-agent/env/.env.*.user

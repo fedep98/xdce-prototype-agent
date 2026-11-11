@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/plugin/v2.4/schema.json",
+  "schema_version": "v2.4",
+  "name_for_human": "XDCE Prototype API",
+  "description_for_human": "Catalogo verificato e generazione di prototipi XDCE.",
+  "description_for_model": "Use this plugin to list verified XDCE components, ask structured catalog-backed requirement questions, generate canonical prototype JSON, and validate prototype documents. Never invent component IDs, variants, styles, sizes, states, or enum values.",
+  "namespace": "xdcePrototype",
+  "functions": [
+    {
+      "name": "listComponents",
+      "description": "List verified XDCE components, properties, variants, constraints and provenance."
+    },
+    {
+      "name": "generatePrototype",
+      "description": "Generate canonical prototype JSON or return structured questions for missing requirements. Present those questions to the user before calling the function again."
+    },
+    {
+      "name": "validatePrototype",
+      "description": "Validate canonical prototype JSON and return explicit schema issues."
+    }
+  ],
+  "runtimes": [
+    {
+      "type": "OpenApi",
+      "auth": {
+        "type": "None"
+      },
+      "spec": {
+        "url": "openapi.yaml",
+        "progress_style": "ShowUsageWithInputAndOutput"
+      },
+      "run_for_functions": [
+        "listComponents",
+        "generatePrototype",
+        "validatePrototype"
+      ]
+    }
+  ],
+  "capabilities": {
+    "conversation_starters": [
+      {
+        "text": "Quali componenti XDCE posso usare?"
+      },
+      {
+        "text": "Crea una pagina di ricerca con input, pulsante e tabella."
+      }
+    ]
+  }
+}
