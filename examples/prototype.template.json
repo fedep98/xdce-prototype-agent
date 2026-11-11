@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0.0",
+  "metadata": {
+    "id": "customer-search",
+    "title": "Ricerca clienti",
+    "description": "Esempio basato sul catalogo XDCE verificato.",
+    "createdAt": "2026-11-11T16:45:59.134Z",
+    "catalogVersion": "xdce-widget-master-verified-2026-11-11"
+  },
+  "viewport": {
+    "width": 1440,
+    "height": 900,
+    "background": "#ffffff"
+  },
+  "root": {
+    "id": "page-root",
+    "type": "layout",
+    "name": "Ricerca clienti",
+    "layout": {
+      "direction": "vertical",
+      "gap": 16,
+      "padding": 24,
+      "width": "fill",
+      "height": "hug"
+    },
+    "children": [
+      {
+        "id": "customer-query",
+        "type": "component",
+        "componentId": "input-text",
+        "props": {
+          "label": "Cliente",
+          "placeholder": "Inserisci nome o codice",
+          "isSearchBar": true
+        }
+      },
+      {
+        "id": "search-action",
+        "type": "component",
+        "componentId": "button",
+        "variant": "type-action",
+        "props": {
+          "nbpLabel": "Cerca",
+          "nbpType": "ACTION",
+          "nbpStyle": "PRIMARY"
+        },
+        "interactions": [
+          {
+            "trigger": "click",
+            "action": "set-state",
+            "target": "results",
+            "value": "loading"
+          }
+        ]
+      },
+      {
+        "id": "results",
+        "type": "component",
+        "componentId": "table",
+        "variant": "selection-single",
+        "props": {
+          "nbpSelectionType": "SINGLE",
+          "ariaLabel": "Risultati ricerca clienti",
+          "nbpOptions": {
+            "sortable": true,
+            "pageSize": 10,
+            "disablePagination": false
+          }
+        }
+      }
+    ]
+  }
+}

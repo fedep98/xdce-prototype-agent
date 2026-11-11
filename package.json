@@ -1,0 +1,26 @@
+{
+  "name": "xdce-prototype-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b --pretty false",
+    "test": "npm run build && node --test packages/prototype-schema/dist/validate.test.js packages/xdce-catalog/dist/catalog.test.js apps/mcp-server/dist/generator.test.js apps/figma-plugin/dist/render-plan.test.js",
+    "clean": "tsc -b --clean",
+    "ingest:xdce": "npm run build && node packages/xdce-catalog/dist/cli.js",
+    "start:mcp": "npm run build && node apps/mcp-server/dist/server.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  }
+}
