@@ -65,7 +65,7 @@ The workflow:
 3. builds `appPackage/build/appPackage.dev.zip`;
 4. validates the package;
 5. updates the app definition;
-6. publishes the declarative agent with user scope.
+6. publishes the declarative agent with personal scope.
 
 ## 4. Test in Microsoft 365 Copilot
 
